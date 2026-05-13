@@ -8,6 +8,9 @@ import {
   Typography,
   Link as MuiLink,
 } from "@mui/material";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+
+const linkedInProfileUrl = "https://www.linkedin.com/in/mohamed-suhail-34446a30b/";
 
 type PastWorkVideo = { kind: "youtube"; videoId: string } | { kind: "file"; src: string };
 
@@ -317,6 +320,24 @@ export default function Home() {
               mohamedsuhails956@gmail.com
             </MuiLink>
             <Box sx={{ width: "4px", height: "4px", borderRadius: "50%", bgcolor: "#534AB7" }} />
+            <MuiLink
+              href={linkedInProfileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              underline="none"
+              sx={{
+                fontSize: "13px",
+                color: "#b0accc",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 0.45,
+                "&:hover": { color: "#c8c4e0" },
+              }}
+            >
+              <LinkedInIcon sx={{ fontSize: 17, color: "#7F77DD" }} aria-hidden />
+              LinkedIn
+            </MuiLink>
+            <Box sx={{ width: "4px", height: "4px", borderRadius: "50%", bgcolor: "#534AB7" }} />
             <Typography sx={{ fontSize: "13px", color: "#b0accc" }}>Employment Visa</Typography>
           </Box>
 
@@ -547,8 +568,38 @@ export default function Home() {
           </Box>
         </Section>
 
-        <Box sx={{ px: { xs: 2.5, sm: 6, md: 10, lg: 16 }, py: 4, textAlign: "center", fontSize: "12px", color: "#3f3c60", letterSpacing: "0.5px", bgcolor: "#07070d" }}>
-          Mohamed Suhail · Content Creator · Dubai, UAE · 2025
+        <Box
+          sx={{
+            px: { xs: 2.5, sm: 6, md: 10, lg: 16 },
+            py: 4,
+            textAlign: "center",
+            fontSize: "12px",
+            color: "#3f3c60",
+            letterSpacing: "0.5px",
+            bgcolor: "#07070d",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 0.5,
+          }}
+        >
+          <Typography component="span" sx={{ fontSize: "inherit", color: "inherit", letterSpacing: "inherit" }}>
+            Mohamed Suhail · Content Creator · Dubai, UAE ·
+          </Typography>{" "}
+          <MuiLink
+            href={linkedInProfileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            underline="hover"
+            sx={{ fontSize: "inherit", color: "#534AB7", letterSpacing: "inherit" }}
+          >
+            LinkedIn
+          </MuiLink>
+          <Typography component="span" sx={{ fontSize: "inherit", color: "inherit", letterSpacing: "inherit" }}>
+            {" "}
+            · 2025
+          </Typography>
         </Box>
       </Container>
     </Box>
