@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import {
   Box,
   Chip,
@@ -7,6 +8,26 @@ import {
   Typography,
   Link as MuiLink,
 } from "@mui/material";
+
+type PastWorkVideo = { kind: "youtube"; videoId: string } | { kind: "file"; src: string };
+
+type PastWork = {
+  title: string;
+  category: string;
+  name: string;
+  country: string;
+  description: string;
+  video?: PastWorkVideo;
+};
+
+type Project = {
+  emoji: string;
+  badge: string;
+  title: string;
+  meta: string[];
+  description: string;
+  roles: string[];
+};
 
 const skills = [
   "Instagram & TikTok Reels",
@@ -33,6 +54,7 @@ const jobs = [
     company: "Develop Shirts Pvt Ltd",
     points: [
       "Produced social media content (posts, reels, stories) for Instagram and Facebook - achieving 40% engagement increase",
+      "Handled visiting models during apparel photoshoots—briefings, on-set coordination, and alignment with photographers and creative direction",
       "Developed promotional materials, product catalogs, and visual assets using Canva",
       "Planned and executed end-to-end digital marketing campaigns, boosting brand visibility by 35%",
       "Monitored and analyzed performance metrics, optimizing strategy in real time",
@@ -97,6 +119,120 @@ const tools = [
   "PowerPoint",
 ];
 
+const pastWorks: PastWork[] = [
+  {
+    title: "UAE retail & brand content",
+    category: "Content creation",
+    name: "Gorgus Trading LLC",
+    country: "United Arab Emirates",
+    description:
+      "Video content produced for Gorgus Trading in the UAE—product-led storytelling and campaign-ready visuals aligned with the brand’s in-mall and digital presence.",
+    video: { kind: "file", src: "/videos/uae_content_creation.mp4" },
+  },
+  {
+    title: "Sri Lanka retail content",
+    category: "Content creation",
+    name: "Royal Dress Point Pvt Ltd",
+    country: "Sri Lanka",
+    description:
+      "Content creation for Royal Dress Point: showcase pieces, store energy, and narrative framing tailored to social audiences in Sri Lanka.",
+    video: { kind: "file", src: `/videos/${encodeURIComponent("sri lanka_content creation.mp4")}` },
+  },
+  {
+    title: "Freelance video editing",
+    category: "Freelance · Video editing",
+    name: "Freelance client",
+    country: "United Arab Emirates",
+    description:
+      "Independent editing work: pacing, cuts, color consistency, and polish so the final piece reads clearly on social and the web.",
+    video: { kind: "file", src: "/videos/freelance_video.mp4" },
+  },
+];
+
+const projects: Project[] = [
+  {
+    emoji: "🎬",
+    badge: "Action · Thriller",
+    title: "Think Twice",
+    meta: ["Short Film", "2022", "British College of Applied Studies"],
+    description:
+      "A student action-thriller short film written and directed during studies at BCAS. A tense, high-stakes story that demonstrates early creative vision, storytelling instinct, and the ability to lead a production from concept to screen.",
+    roles: ["Director", "Storyteller", "Student Production"],
+  },
+  {
+    emoji: "📸",
+    badge: "Fashion · Brand",
+    title: "Develop Shirts — Photoshoot coordination",
+    meta: ["Brand campaign", "2024", "Develop Shirts Pvt Ltd"],
+    description:
+      "Managed the model who came in for Develop Shirts apparel photoshoots: schedules and briefings, on-set coordination with photographers, and keeping shots on-brand for social, catalog, and campaign use.",
+    roles: ["Talent coordination", "On-set support", "Brand-aligned production"],
+  },
+];
+
+function PastWorkVideoPlayer({ video }: { video: PastWorkVideo }) {
+  if (video.kind === "youtube") {
+    return (
+      <Box
+        sx={{
+          position: "relative",
+          width: "100%",
+          pt: "56.25%",
+          borderRadius: "12px",
+          overflow: "hidden",
+          bgcolor: "#000",
+          border: "1px solid rgba(127,119,221,0.2)",
+        }}
+      >
+        <Box
+          component="iframe"
+          title="Past work video"
+          src={`https://www.youtube-nocookie.com/embed/${video.videoId}`}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            border: 0,
+          }}
+        />
+      </Box>
+    );
+  }
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        borderRadius: "12px",
+        overflow: "hidden",
+        bgcolor: "#050508",
+        border: "1px solid rgba(127,119,221,0.25)",
+        aspectRatio: "16 / 9",
+        position: "relative",
+      }}
+    >
+      <Box
+        component="video"
+        src={video.src}
+        controls
+        playsInline
+        preload="metadata"
+        sx={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "contain",
+          bgcolor: "#000",
+        }}
+      />
+    </Box>
+  );
+}
+
 const sectionLabelStyles = {
   display: "flex",
   alignItems: "center",
@@ -109,7 +245,7 @@ const sectionLabelStyles = {
   fontWeight: 500,
 };
 
-function Section({ label, children }: { label: string; children: React.ReactNode }) {
+function Section({ label, children }: { label: string; children: ReactNode }) {
   return (
     <Box sx={{ px: { xs: 2.5, sm: 6, md: 10, lg: 16 }, py: { xs: 5, sm: 5.5, md: 6 }, borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
       <Box sx={sectionLabelStyles}>
@@ -208,35 +344,124 @@ export default function Home() {
           </Box>
         </Section>
 
-        <Section label="Featured Project">
-          <Box sx={{ border: "1px solid rgba(127,119,221,0.2)", borderRadius: "16px", overflow: "hidden", bgcolor: "rgba(255,255,255,0.02)", display: "flex", flexDirection: { xs: "column", sm: "row" } }}>
-            <Box sx={{ width: { xs: "100%", sm: "140px" }, minHeight: "180px", background: "linear-gradient(160deg, #1a1530 0%, #0d0d20 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 1.2, position: "relative" }}>
-              <Typography sx={{ fontSize: "40px", position: "relative", zIndex: 1 }}>🎬</Typography>
-              <Typography sx={{ fontSize: "10px", letterSpacing: "1.5px", textTransform: "uppercase", color: "#7F77DD", border: "1px solid rgba(127,119,221,0.4)", px: 1.25, py: 0.5, borderRadius: "20px", position: "relative", zIndex: 1, bgcolor: "rgba(10,10,15,0.6)" }}>
-                Action · Thriller
-              </Typography>
-            </Box>
-            <Box sx={{ p: { xs: 2.5, sm: 3.5 }, flex: 1 }}>
-              <Typography sx={{ fontFamily: "var(--font-playfair)", fontSize: "26px", color: "#f0ece4", mb: 0.8 }}>Think Twice</Typography>
-              <Box sx={{ mb: 2, display: "flex", gap: 1.2, flexWrap: "wrap" }}>
-                {["Short Film", "2022", "British College of Applied Studies"].map((meta) => (
-                  <Box key={meta} sx={{ fontSize: "12px", color: "#6660a0", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", px: 1.5, py: 0.5, borderRadius: "20px" }}>
-                    {meta}
+        <Section label="Past works">
+          <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 3.5, md: 4.5 } }}>
+            {pastWorks.map((work) => (
+              <Box
+                key={work.title}
+                sx={{
+                  border: "1px solid rgba(127,119,221,0.22)",
+                  borderRadius: "20px",
+                  overflow: "hidden",
+                  bgcolor: "rgba(8,8,14,0.85)",
+                  boxShadow: "0 24px 48px rgba(0,0,0,0.35)",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "grid",
+                    gridTemplateColumns: { xs: "1fr", md: "minmax(0, 1.15fr) minmax(0, 0.85fr)" },
+                    gap: 0,
+                    alignItems: "stretch",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      p: { xs: 2, sm: 2.25, md: 2.5 },
+                      bgcolor: "rgba(0,0,0,0.45)",
+                      borderRight: { md: "1px solid rgba(127,119,221,0.12)" },
+                      borderBottom: { xs: "1px solid rgba(127,119,221,0.12)", md: "none" },
+                    }}
+                  >
+                    {work.video ? <PastWorkVideoPlayer video={work.video} /> : null}
                   </Box>
-                ))}
-              </Box>
-              <Typography sx={{ fontSize: "14px", color: "#7e7a98", lineHeight: 1.75, mb: 2.25 }}>
-                A student action-thriller short film written and directed during studies at BCAS. A tense, high-stakes story that demonstrates early creative vision, storytelling
-                instinct, and the ability to lead a production from concept to screen.
-              </Typography>
-              <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-                {["Director", "Storyteller", "Student Production"].map((role) => (
-                  <Box key={role} sx={{ fontSize: "12px", px: 1.75, py: 0.5, borderRadius: "20px", bgcolor: "rgba(83,74,183,0.15)", border: "1px solid rgba(83,74,183,0.3)", color: "#a09cd8" }}>
-                    {role}
+                  <Box sx={{ p: { xs: 2.5, sm: 3, md: 3.25 }, display: "flex", flexDirection: "column", justifyContent: "center", gap: 2 }}>
+                    <Typography sx={{ fontSize: "11px", letterSpacing: "2.5px", textTransform: "uppercase", color: "#534AB7", fontWeight: 600 }}>{work.category}</Typography>
+                    <Typography sx={{ fontFamily: "var(--font-playfair)", fontSize: { xs: "22px", sm: "24px" }, color: "#f0ece4", lineHeight: 1.2 }}>{work.title}</Typography>
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.25 }}>
+                      <Box sx={{ fontSize: "12px", color: "#c8c4e0", bgcolor: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", px: 1.5, py: 0.55, borderRadius: "20px" }}>
+                        {work.name}
+                      </Box>
+                      <Box sx={{ fontSize: "12px", color: "#6660a0", bgcolor: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", px: 1.5, py: 0.55, borderRadius: "20px" }}>
+                        Country: <Box component="span" sx={{ color: "#c8c4e0" }}>{work.country}</Box>
+                      </Box>
+                    </Box>
+                    <Typography sx={{ fontSize: "14px", color: "#8a86a4", lineHeight: 1.8 }}>{work.description}</Typography>
                   </Box>
-                ))}
+                </Box>
               </Box>
-            </Box>
+            ))}
+          </Box>
+        </Section>
+
+        <Section label="Projects">
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+            {projects.map((project) => (
+              <Box
+                key={project.title}
+                sx={{
+                  border: "1px solid rgba(127,119,221,0.2)",
+                  borderRadius: "16px",
+                  overflow: "hidden",
+                  bgcolor: "rgba(255,255,255,0.02)",
+                  display: "flex",
+                  flexDirection: { xs: "column", sm: "row" },
+                }}
+              >
+                <Box
+                  sx={{
+                    width: { xs: "100%", sm: "140px" },
+                    minHeight: "180px",
+                    background: "linear-gradient(160deg, #1a1530 0%, #0d0d20 100%)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 1.2,
+                    position: "relative",
+                  }}
+                >
+                  <Typography sx={{ fontSize: "40px", position: "relative", zIndex: 1 }}>{project.emoji}</Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "10px",
+                      letterSpacing: "1.5px",
+                      textTransform: "uppercase",
+                      color: "#7F77DD",
+                      border: "1px solid rgba(127,119,221,0.4)",
+                      px: 1.25,
+                      py: 0.5,
+                      borderRadius: "20px",
+                      position: "relative",
+                      zIndex: 1,
+                      bgcolor: "rgba(10,10,15,0.6)",
+                      textAlign: "center",
+                      maxWidth: "120px",
+                    }}
+                  >
+                    {project.badge}
+                  </Typography>
+                </Box>
+                <Box sx={{ p: { xs: 2.5, sm: 3.5 }, flex: 1 }}>
+                  <Typography sx={{ fontFamily: "var(--font-playfair)", fontSize: "26px", color: "#f0ece4", mb: 0.8 }}>{project.title}</Typography>
+                  <Box sx={{ mb: 2, display: "flex", gap: 1.2, flexWrap: "wrap" }}>
+                    {project.meta.map((meta) => (
+                      <Box key={meta} sx={{ fontSize: "12px", color: "#6660a0", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", px: 1.5, py: 0.5, borderRadius: "20px" }}>
+                        {meta}
+                      </Box>
+                    ))}
+                  </Box>
+                  <Typography sx={{ fontSize: "14px", color: "#7e7a98", lineHeight: 1.75, mb: 2.25 }}>{project.description}</Typography>
+                  <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                    {project.roles.map((role) => (
+                      <Box key={role} sx={{ fontSize: "12px", px: 1.75, py: 0.5, borderRadius: "20px", bgcolor: "rgba(83,74,183,0.15)", border: "1px solid rgba(83,74,183,0.3)", color: "#a09cd8" }}>
+                        {role}
+                      </Box>
+                    ))}
+                  </Box>
+                </Box>
+              </Box>
+            ))}
           </Box>
         </Section>
 
